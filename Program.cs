@@ -1,29 +1,33 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Adicionando os serviços necessários (MVC)
+// Adiciona suporte a controladores com views (MVC)
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configuração do pipeline de requisições HTTP
+// Pipeline de requisição HTTP
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
+    app.UseDeveloperExceptionPage(); // Detalha erros durante o desenvolvimento
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
+    app.UseExceptionHandler("/Home/Error"); // Página genérica de erro para produção
+    app.UseHsts(); // Força uso de HTTPS
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();  // Responsável por servir arquivos estáticos (CSS, JS, imagens, etc.)
+app.UseHttpsRedirection(); // Redireciona HTTP para HTTPS
+app.UseStaticFiles();      // Permite servir arquivos estáticos como CSS/JS
 
-app.UseRouting();
+app.UseRouting(); // Ativa o sistema de roteamento
 
-// Configuração das rotas, ajustando para o TaskController
+// Define rota padrão apontando para o controlador "Tarefa" e ação "Index"
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Task}/{action=Index}/{id?}");
+    pattern: "{controller=Tarefa}/{action=Index}/{id?}");
 
 app.Run();

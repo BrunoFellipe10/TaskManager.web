@@ -1,0 +1,16 @@
+@model TaskManager.Models.TarefaModel
+
+@{
+    ViewData["Title"] = "Excluir Tarefa";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Você tem certeza que deseja excluir a tarefa <strong>@Model.Nome</strong>?</h3>
+
+<form asp-action="Excluir" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Excluir</button>
+</form>
+
+<a asp-action="Index">Voltar para a lista de tarefas</a>

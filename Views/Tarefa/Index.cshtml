@@ -1,0 +1,45 @@
+@model List<TaskManager.Models.TarefaModel>
+
+@{
+    ViewData["Title"] = "Lista de Tarefas";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Status</th>
+            <th>Data de Criação</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tarefa in Model)
+        {
+            <tr>
+                <td>@tarefa.Nome</td>
+                <td>@tarefa.Descricao</td>
+                <td>
+                    @if (tarefa.Concluida)
+                    {
+                        <span class="badge bg-success">Concluída</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning">Pendente</span>
+                    }
+                </td>
+                <td>@tarefa.DataCriacao.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                <td>
+                    <a asp-action="Editar" asp-route-id="@tarefa.Id" class="btn btn-primary">Editar</a>
+                    <a asp-action="Excluir" asp-route-id="@tarefa.Id" class="btn btn-danger">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Criar" class="btn btn-success">Criar Tarefa</a>
